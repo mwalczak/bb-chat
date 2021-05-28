@@ -18,6 +18,7 @@ class WebhookController extends AbstractController
     {
         try {
             $webhookBody = $request->toArray();
+            file_put_contents(__DIR__ . '/../../var/log/dump.log', date('Y-m-d H:i:s') . PHP_EOL . print_r($webhookBody, true) . PHP_EOL . PHP_EOL, FILE_APPEND);
             $webhook = WebhookParser::parse($webhookBody);
             WebhookSender::send($webhook, $key);
         } catch (\Exception $ex) {
