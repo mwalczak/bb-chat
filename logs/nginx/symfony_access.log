@@ -1,0 +1,2 @@
+172.22.0.1 - - [28/May/2021:09:34:08 +0000] "GET / HTTP/1.1" 404 32134 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:88.0) Gecko/20100101 Firefox/88.0"
+172.22.0.1 - - [28/May/2021:09:34:08 +0000] "GET /favicon.ico HTTP/1.1" 404 172540 "http://localhost:8081/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:88.0) Gecko/20100101 Firefox/88.0"
