@@ -20,10 +20,17 @@ docker-compose exec php vender/bin/phpunit
 ```
 
 ## Usage
-```
-TODO
-```
+- Create webhook for Chat: https://developers.google.com/chat/how-tos/webhooks
 
+- Save it to config file under **key** (see examples in dist config)
+
+- Enable all the webhooks for your Bitbucket project:
+https://support.atlassian.com/bitbucket-cloud/docs/manage-webhooks/
+
+- Use url with **key** from config file:
+https://you.domain/webhook/first_key
+
+- Done :)
 
 ## Code style
 Run ECS with:
