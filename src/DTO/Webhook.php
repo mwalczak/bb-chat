@@ -10,9 +10,9 @@ use ReflectionClass;
 class Webhook
 {
     public Comment $comment;
-    public Approval $approval;
     public PullRequest $pullRequest;
     public Repository $repository;
+    public Author $author;
 
     public function __toString(): string
     {

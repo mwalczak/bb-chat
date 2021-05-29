@@ -15,7 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class WebhookController extends AbstractController
 {
     #[Route('/webhook/{key}', name: 'webhook')]
-    public function index(string $key, Request $request, LoggerInterface $logger): Response
+    public function index(string $key, Request $request, LoggerInterface $logger, WebhookSender $webhookSender): Response
     {
         try {
             $webhookBody = $request->toArray();
@@ -23,11 +23,11 @@ class WebhookController extends AbstractController
             $webhook = WebhookParser::parse($webhookBody);
             $title = $request->headers->get('X-Event-Key', 'Unknown event');
             $time = $request->headers->get('X-Event-Time', '');
-            WebhookSender::send($key, $webhook, $title, $time, );
+            $webhookSender->send($key, $webhook, $title, $time);
         } catch (\Exception $ex) {
-            return $this->json($ex->getMessage(), 400);
+            return new Response($ex->getMessage(), 400);
         }
 
-        return new Response((string)$webhook);
+        return new Response('ok');
     }
 }

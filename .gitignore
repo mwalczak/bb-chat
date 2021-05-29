@@ -1,5 +1,6 @@
 /.idea
-/config/webhooks.php
+/config/packages/dev/webhooks.php
+/config/packages/prod/webhooks.php
 /logs
 !/logs/.gitignore
 ###> symfony/framework-bundle ###

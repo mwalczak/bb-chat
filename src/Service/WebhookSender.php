@@ -6,12 +6,20 @@ declare(strict_types=1);
 namespace App\Service;
 
 use App\DTO\Webhook;
+use Symfony\Component\HttpKernel\KernelInterface;
 
 class WebhookSender
 {
-    public static function send(string $key, Webhook $webhook, string $title, string $time): void
+    private string $environment;
+
+    public function __construct(KernelInterface $kernel)
     {
-        $webhooks = require __DIR__ . '/../../config/webhooks.php';
+        $this->environment = $kernel->getEnvironment();
+    }
+
+    public function send(string $key, Webhook $webhook, string $title, string $time): void
+    {
+        $webhooks = require __DIR__ . '/../../config/packages/' . $this->environment . '/webhooks.php';
         if (empty($webhooks[$key])) {
             throw new \Exception('Unknown key');
         }

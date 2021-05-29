@@ -1,0 +1,5 @@
+<?php
+return [
+    'first_key' => 'https://chat.googleapis.com/v1/spaces/xxxxxxx/messages?key=xxxxxxxxxxxx&token=xxxxxxxxxxxxxxxxx',
+    'second_key' => 'https://chat.googleapis.com/v1/spaces/xxxxxxx/messages?key=xxxxxxxxxxxx&token=xxxxxxxxxxxxxxxxx'
+];

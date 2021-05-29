@@ -5,7 +5,7 @@ declare(strict_types=1);
 
 namespace App\DTO;
 
-class Author
+class Author implements Linkable
 {
     public function __construct(private string $name, private Link $link, private Link $avatar)
     {
@@ -23,5 +23,10 @@ class Author
     public function __toString(): string
     {
         return $this->name;
+    }
+
+    public function getLink(): string
+    {
+        return (string)$this->link;
     }
 }

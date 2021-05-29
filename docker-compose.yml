@@ -2,6 +2,7 @@ version: '3'
 
 services:
   nginx:
+    hostname: bb-chat
     build: docker/nginx
     restart: unless-stopped
     ports:

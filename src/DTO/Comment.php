@@ -7,7 +7,7 @@ namespace App\DTO;
 
 class Comment implements Linkable
 {
-    public function __construct(private string $text, private Link $link, private Author $author)
+    public function __construct(private string $text, private Link $link)
     {
     }
 
@@ -15,19 +15,13 @@ class Comment implements Linkable
     {
         return new self(
             $body['content']['raw'],
-            Link::fromBody($body['links']['html']),
-            Author::fromBody($body['user'])
+            Link::fromBody($body['links']['html'])
         );
     }
 
     public function __toString(): string
     {
-        return sprintf(
-            "Text: %s\n" .
-            "Author: %s\n",
-            $this->text,
-            $this->author,
-        );
+        return sprintf("Text: %s\n", $this->text);
     }
 
     public function getLink(): string
