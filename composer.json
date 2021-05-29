@@ -17,6 +17,7 @@
         "symfony/maker-bundle": "^1.31",
         "symfony/monolog-bundle": "^3.7",
         "symfony/runtime": "*",
+        "symfony/twig-bundle": "5.3.*",
         "symfony/yaml": "*"
     },
     "config": {
@@ -68,7 +69,6 @@
         "symfony/css-selector": "^5.3@RC",
         "symfony/phpunit-bridge": "^5.2",
         "symfony/stopwatch": "^5.3@RC",
-        "symfony/twig-bundle": "^5.3@RC",
         "symfony/web-profiler-bundle": "^5.3@RC",
         "symplify/easy-coding-standard": "^9.3"
     }
