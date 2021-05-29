@@ -24,7 +24,7 @@ class Webhook
         return $text;
     }
 
-    public function toCard(string $title): array
+    public function toCard(string $title, string $time): array
     {
         $widgets = [];
         foreach (get_object_vars($this) as $var) {
@@ -48,7 +48,8 @@ class Webhook
 
         return [
             'header' => [
-                'title' => $title
+                'title' => $title,
+                'subtitle' => $time
             ],
             'sections' => [
                 'widgets' => $widgets

@@ -9,14 +9,14 @@ use App\DTO\Webhook;
 
 class WebhookSender
 {
-    public static function send(Webhook $webhook, string $title, string $key): void
+    public static function send(string $key, Webhook $webhook, string $title, string $time): void
     {
         $webhooks = require __DIR__ . '/../../config/webhooks.php';
         if (empty($webhooks[$key])) {
             throw new \Exception('Unknown key');
         }
         $json = json_encode(['cards' => [
-            $webhook->toCard($title)
+            $webhook->toCard($title, $time)
         ]]);
         $options = stream_context_create(['http' => [
             'method'  => 'POST',
