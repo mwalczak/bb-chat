@@ -6,6 +6,7 @@ namespace App\Controller;
 
 use App\Service\WebhookParser;
 use App\Service\WebhookSender;
+use Monolog\Logger;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,11 +15,11 @@ use Symfony\Component\Routing\Annotation\Route;
 class WebhookController extends AbstractController
 {
     #[Route('/webhook/{key}', name: 'webhook')]
-    public function index(string $key, Request $request): Response
+    public function index(string $key, Request $request, Logger $logger): Response
     {
         try {
             $webhookBody = $request->toArray();
-            file_put_contents(__DIR__ . '/../../var/log/dump.log', date('Y-m-d H:i:s') . PHP_EOL . print_r($webhookBody, true) . PHP_EOL . PHP_EOL, FILE_APPEND);
+            $logger->info($request->getContent());
             $webhook = WebhookParser::parse($webhookBody);
             WebhookSender::send($webhook, $key);
         } catch (\Exception $ex) {
