@@ -6,7 +6,7 @@ namespace App\Controller;
 
 use App\Service\WebhookParser;
 use App\Service\WebhookSender;
-use Monolog\Logger;
+use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,7 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class WebhookController extends AbstractController
 {
     #[Route('/webhook/{key}', name: 'webhook')]
-    public function index(string $key, Request $request, Logger $logger): Response
+    public function index(string $key, Request $request, LoggerInterface $logger): Response
     {
         try {
             $webhookBody = $request->toArray();
