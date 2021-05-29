@@ -21,7 +21,8 @@ class WebhookController extends AbstractController
             $webhookBody = $request->toArray();
             $logger->info($request->getContent());
             $webhook = WebhookParser::parse($webhookBody);
-            WebhookSender::send($webhook, $key);
+            $title = $request->headers->get('X-Event-Key', 'Unknown event');
+            WebhookSender::send($webhook, $title, $key);
         } catch (\Exception $ex) {
             return $this->json($ex->getMessage(), 400);
         }

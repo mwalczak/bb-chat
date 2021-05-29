@@ -10,6 +10,8 @@ use ReflectionClass;
 class Webhook
 {
     public Comment $comment;
+    public Approval $approval;
+    public PullRequest $pullRequest;
     public Repository $repository;
 
     public function __toString(): string
@@ -22,7 +24,7 @@ class Webhook
         return $text;
     }
 
-    public function toCard(): array
+    public function toCard(string $title): array
     {
         $widgets = [];
         foreach (get_object_vars($this) as $var) {
@@ -30,7 +32,6 @@ class Webhook
             $section = [
                 'topLabel' => $class->getShortName(),
                 'content'  => (string)$var,
-
             ];
             if ($class->implementsInterface(Linkable::class)) {
                 /** @var Linkable $var */
@@ -47,19 +48,11 @@ class Webhook
 
         return [
             'header' => [
-                'title' => $this->getTitle()
+                'title' => $title
             ],
             'sections' => [
                 'widgets' => $widgets
             ]
         ];
-    }
-
-    private function getTitle(): string
-    {
-        if ($this->comment) {
-            return 'New Comment';
-        }
-        return 'Unknown event';
     }
 }
