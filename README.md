@@ -11,7 +11,8 @@ docker-compose exec php composer install
 ```
 ### Config your webhooks after copying dist file
 ```
-cp config/webhooks.php.dist config/webhooks.php
+cp config/packages/dev/webhooks.php.dist config/packages/dev/webhooks.php
+cp config/packages/prod/webhooks.php.dist config/packages/prod/webhooks.php
 ```
 
 ## Run tests
