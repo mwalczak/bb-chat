@@ -7,7 +7,7 @@ namespace App\DTO;
 
 class PullRequest implements Linkable
 {
-    public function __construct(private string $title, private Link $link)
+    public function __construct(private string $title, private Link $link, private string $reason)
     {
     }
 
@@ -15,18 +15,23 @@ class PullRequest implements Linkable
     {
         return new self(
             $body['title'],
-            Link::fromBody($body['links']['html'])
+            Link::fromBody($body['links']['html']),
+            $body['reason'] ?? ''
         );
     }
 
     public function __toString(): string
     {
-        return sprintf(
+        $text = sprintf(
             "Title: %s\n" .
             "Link: %s",
             $this->title,
             $this->link
         );
+        if (!empty($this->reason)) {
+            $text .= sprintf("\nReason: %s", $this->reason);
+        }
+        return $text;
     }
 
     public function getLink(): string

@@ -48,7 +48,7 @@ class Webhook
 
         return [
             'header' => [
-                'title' => $title,
+                'title'    => $title,
                 'subtitle' => $time
             ],
             'sections' => [
