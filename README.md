@@ -17,7 +17,7 @@ cp config/packages/prod/webhooks.php.dist config/packages/prod/webhooks.php
 
 ## Run tests
 ```
-docker-compose exec php vender/bin/phpunit
+docker-compose exec php vendor/bin/phpunit
 ```
 
 ## Usage
