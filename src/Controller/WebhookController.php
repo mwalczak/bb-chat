@@ -14,8 +14,8 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class WebhookController extends AbstractController
 {
-    #[Route('/webhook/{key}', name: 'webhook')]
-    public function index(string $key, Request $request, LoggerInterface $logger, WebhookSender $webhookSender): Response
+    #[Route('/bitbucket/{key}', name: 'bitbucket')]
+    public function bitbucket(string $key, Request $request, LoggerInterface $logger, WebhookSender $webhookSender): Response
     {
         try {
             $webhookBody = $request->toArray();
@@ -24,6 +24,19 @@ class WebhookController extends AbstractController
             $title = $request->headers->get('X-Event-Key', 'Unknown event');
             $time = $request->headers->get('X-Event-Time', '');
             $webhookSender->send($key, $webhook, $title, $time);
+        } catch (\Exception $ex) {
+            return new Response($ex->getMessage(), 400);
+        }
+
+        return new Response('ok');
+    }
+
+    #[Route('/hetrix/{key}', name: 'hetrix')]
+    public function hetrix(string $key, Request $request, LoggerInterface $logger, WebhookSender $webhookSender): Response
+    {
+        try {
+            $webhookBody = $request->toArray();
+            $logger->info($request->getContent());
         } catch (\Exception $ex) {
             return new Response($ex->getMessage(), 400);
         }
