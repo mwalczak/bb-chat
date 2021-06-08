@@ -5,7 +5,7 @@ declare(strict_types=1);
 
 namespace App\Service;
 
-use App\DTO\Webhook;
+use App\DTO\Webhookable;
 use Symfony\Component\HttpKernel\KernelInterface;
 
 class WebhookSender
@@ -17,14 +17,14 @@ class WebhookSender
         $this->environment = $kernel->getEnvironment();
     }
 
-    public function send(string $key, Webhook $webhook, string $title, string $time): void
+    public function send(string $key, Webhookable $webhook): void
     {
         $webhooks = require __DIR__ . '/../../config/packages/' . $this->environment . '/webhooks.php';
         if (empty($webhooks[$key])) {
             throw new \Exception('Unknown key');
         }
         $json = json_encode(['cards' => [
-            $webhook->toCard($title, $time)
+            $webhook->toCard()
         ]]);
         $options = stream_context_create(['http' => [
             'method'  => 'POST',

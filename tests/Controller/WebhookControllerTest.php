@@ -13,7 +13,7 @@ class WebhookControllerTest extends WebTestCase
     {
         $client = static::createClient();
 
-        $client->request('POST', '/webhook/notfound');
+        $client->request('POST', '/bitbucket/notfound');
 
         $this->assertResponseStatusCodeSame(400);
         $this->assertEquals('Request body is empty.', $client->getResponse()->getContent());
@@ -25,7 +25,7 @@ class WebhookControllerTest extends WebTestCase
 
         $client->request(
             'POST',
-            '/webhook/notfound',
+            '/bitbucket/notfound',
             [],
             [],
             [],
@@ -42,7 +42,7 @@ class WebhookControllerTest extends WebTestCase
 
         $client->request(
             'POST',
-            '/webhook/first_key',
+            '/bitbucket/first_key',
             [],
             [],
             [],

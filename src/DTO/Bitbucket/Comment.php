@@ -3,7 +3,9 @@
 declare(strict_types=1);
 
 
-namespace App\DTO;
+namespace App\DTO\Bitbucket;
+
+use App\DTO\Linkable;
 
 class Comment implements Linkable
 {

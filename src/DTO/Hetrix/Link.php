@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 
-namespace App\DTO;
+namespace App\DTO\Hetrix;
 
 class Link
 {
@@ -14,7 +14,7 @@ class Link
     public static function fromBody(array $body): self
     {
         return new self(
-            $body['href'],
+            $body['report_link'],
         );
     }
 

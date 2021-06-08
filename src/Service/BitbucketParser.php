@@ -5,13 +5,13 @@ declare(strict_types=1);
 
 namespace App\Service;
 
-use App\DTO\Author;
-use App\DTO\Comment;
-use App\DTO\PullRequest;
-use App\DTO\Repository;
-use App\DTO\Webhook;
+use App\DTO\Bitbucket\Author;
+use App\DTO\Bitbucket\Comment;
+use App\DTO\Bitbucket\PullRequest;
+use App\DTO\Bitbucket\Repository;
+use App\DTO\Bitbucket\Webhook;
 
-class WebhookParser
+class BitbucketParser
 {
     public static function parse(array $webhookBody): Webhook
     {

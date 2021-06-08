@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Service\WebhookParser;
+use App\Service\BitbucketParser;
+use App\Service\HetrixParser;
 use App\Service\WebhookSender;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -20,10 +21,10 @@ class WebhookController extends AbstractController
         try {
             $webhookBody = $request->toArray();
             $logger->info($request->getContent());
-            $webhook = WebhookParser::parse($webhookBody);
-            $title = $request->headers->get('X-Event-Key', 'Unknown event');
-            $time = $request->headers->get('X-Event-Time', '');
-            $webhookSender->send($key, $webhook, $title, $time);
+            $webhook = BitbucketParser::parse($webhookBody);
+            $webhook->title = (string) $request->headers->get('X-Event-Key', 'Unknown event');
+            $webhook->date = (string) $request->headers->get('X-Event-Time', '');
+            $webhookSender->send($key, $webhook);
         } catch (\Exception $ex) {
             return new Response($ex->getMessage(), 400);
         }
@@ -37,6 +38,8 @@ class WebhookController extends AbstractController
         try {
             $webhookBody = $request->toArray();
             $logger->info($request->getContent());
+            $webhook = HetrixParser::parse($webhookBody);
+            $webhookSender->send($key, $webhook);
         } catch (\Exception $ex) {
             return new Response($ex->getMessage(), 400);
         }
