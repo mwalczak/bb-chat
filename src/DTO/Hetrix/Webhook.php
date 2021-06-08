@@ -1,8 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 
 namespace App\DTO\Hetrix;
-
 
 use App\DTO\AbstractWebhook;
 use App\DTO\Linkable;
@@ -13,6 +14,7 @@ class Webhook extends AbstractWebhook implements Webhookable
 {
     /** @var Blacklist[] */
     public array $blacklists = [];
+    public Server $server;
 
     public function __construct()
     {
@@ -27,7 +29,7 @@ class Webhook extends AbstractWebhook implements Webhookable
                 foreach ($var as $value) {
                     $text = $this->parseVar($value, $text) . PHP_EOL;
                 }
-            } elseif(is_object($var)) {
+            } elseif (is_object($var)) {
                 $text = $this->parseVar($var, $text);
             }
         }
@@ -68,7 +70,7 @@ class Webhook extends AbstractWebhook implements Webhookable
                         'keyValue' => $this->generateSection($value)
                     ];
                 }
-            } elseif(is_object($var)) {
+            } elseif (is_object($var)) {
                 $widgets[] = [
                     'keyValue' => $this->generateSection($var)
                 ];

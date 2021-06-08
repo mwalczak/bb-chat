@@ -21,7 +21,7 @@ class Webhook extends AbstractWebhook implements Webhookable
     {
         $text = '';
         foreach (get_object_vars($this) as $var) {
-            if(is_object($var)) {
+            if (is_object($var)) {
                 $class = new ReflectionClass($var);
                 $text .= sprintf("\n%s\n%s", $class->getShortName(), $var);
             }
@@ -33,7 +33,7 @@ class Webhook extends AbstractWebhook implements Webhookable
     {
         $widgets = [];
         foreach (get_object_vars($this) as $var) {
-            if(is_object($var)){
+            if (is_object($var)) {
                 $class = new ReflectionClass($var);
                 $section = [
                     'topLabel' => $class->getShortName(),
