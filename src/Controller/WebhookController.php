@@ -46,4 +46,17 @@ class WebhookController extends AbstractController
 
         return new Response('ok');
     }
+
+    #[Route('/youtrack/{key}', name: 'youtrack')]
+    public function youtrack(string $key, Request $request, LoggerInterface $logger, WebhookSender $webhookSender): Response
+    {
+        try {
+            $webhookBody = $request->toArray();
+            $logger->info($request->getContent());
+        } catch (\Exception $ex) {
+            return new Response($ex->getMessage(), 400);
+        }
+
+        return new Response('ok');
+    }
 }
