@@ -6,6 +6,7 @@ namespace App\Controller;
 
 use App\Service\BitbucketParser;
 use App\Service\HetrixParser;
+use App\Service\SlackParser;
 use App\Service\WebhookSender;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -47,12 +48,15 @@ class WebhookController extends AbstractController
         return new Response('ok');
     }
 
-    #[Route('/slack/{key}', name: 'youtrack')]
+    #[Route('/youtrack/{key}', name: 'youtrack')]
     public function slack(string $key, Request $request, LoggerInterface $logger, WebhookSender $webhookSender): Response
     {
         try {
             $webhookBody = $request->toArray();
             $logger->info($request->getContent());
+            $webhook = SlackParser::parse($webhookBody);
+            $webhook->title = "Youtrack";
+            $webhookSender->send($key, $webhook);
         } catch (\Exception $ex) {
             return new Response($ex->getMessage(), 400);
         }
