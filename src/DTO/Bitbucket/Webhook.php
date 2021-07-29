@@ -16,6 +16,7 @@ class Webhook extends AbstractWebhook implements Webhookable
     public PullRequest $pullRequest;
     public Repository $repository;
     public Author $author;
+    public $reviewers;
 
     public function __toString(): string
     {
@@ -32,7 +33,7 @@ class Webhook extends AbstractWebhook implements Webhookable
     public function toCard(): array
     {
         $widgets = [];
-        foreach (get_object_vars($this) as $var) {
+        foreach ($this as $var) {
             if (is_object($var)) {
                 $class = new ReflectionClass($var);
                 $section = [
@@ -51,6 +52,28 @@ class Webhook extends AbstractWebhook implements Webhookable
                     'keyValue' => $section
                 ];
             }
+            elseif (is_array($var)) {
+                $section = [
+                    'topLabel' => '',
+                    'content' => ''
+                ];
+                $i=0;
+                foreach($var AS $item) {
+                    $i++;
+                    $class = new ReflectionClass($item);
+                    $section['topLabel'] = $class->getShortName();
+
+                    if ($class->implementsInterface(Linkable::class)) {
+                        /** @var Linkable $item */
+
+                        $section['content'].= $i>1?", ":"";
+                        $section['content'].= "<a href='".$item->getLink()."'>".(string)$item."</a>";
+                    }
+                }
+                $widgets[] = [
+                    'keyValue' => $section
+                ];
+            }
         }
 
         return [
@@ -62,5 +85,6 @@ class Webhook extends AbstractWebhook implements Webhookable
                 'widgets' => $widgets
             ]
         ];
+
     }
 }
