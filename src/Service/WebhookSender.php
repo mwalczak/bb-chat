@@ -23,14 +23,22 @@ class WebhookSender
         if (empty($webhooks[$key])) {
             throw new \Exception('Unknown key');
         }
-        $json = json_encode(['cards' => [
-            $webhook->toCard()
-        ]]);
-        $options = stream_context_create(['http' => [
-            'method'  => 'POST',
-            'header'  => 'Content-type: application/json',
-            'content' => $json
-        ]]);
+        $json = json_encode(
+            [
+                'cards' => [
+                    $webhook->toCard()
+                ]
+            ]
+        );
+        $options = stream_context_create(
+            [
+                'http' => [
+                    'method' => 'POST',
+                    'header' => 'Content-type: application/json',
+                    'content' => $json
+                ]
+            ]
+        );
 
         file_get_contents($webhooks[$key], false, $options);
     }
