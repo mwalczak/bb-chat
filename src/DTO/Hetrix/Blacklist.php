@@ -9,8 +9,13 @@ use App\DTO\Linkable;
 
 class Blacklist implements Linkable
 {
-    public function __construct(private string $ip, private string $label, private int $before, private int $now, private Link $link)
-    {
+    public function __construct(
+        private string $ip,
+        private string $label,
+        private int $before,
+        private int $now,
+        private Link $link
+    ) {
     }
 
     public static function fromBody(array $body): self

@@ -5,11 +5,11 @@ declare(strict_types=1);
 
 namespace App\Service;
 
-use App\DTO\Bitbucket\Reviewer;
 use App\DTO\Bitbucket\Author;
 use App\DTO\Bitbucket\Comment;
 use App\DTO\Bitbucket\PullRequest;
 use App\DTO\Bitbucket\Repository;
+use App\DTO\Bitbucket\Reviewer;
 use App\DTO\Bitbucket\Webhook;
 
 class BitbucketParser
@@ -30,8 +30,9 @@ class BitbucketParser
             $webhook->author = Author::fromBody($webhookBody['actor']);
         }
         if (!empty($webhookBody['pullrequest']['reviewers'])) {
-            foreach ($webhookBody['pullrequest']['reviewers'] AS $reviewer)
-            $webhook->reviewers[] = Reviewer::fromBody($reviewer);
+            foreach ($webhookBody['pullrequest']['reviewers'] as $reviewer) {
+                $webhook->reviewers[] = Reviewer::fromBody($reviewer);
+            }
         }
         return $webhook;
     }

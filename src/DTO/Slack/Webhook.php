@@ -61,9 +61,13 @@ class Webhook extends AbstractWebhook implements Webhookable
 
     public function toCard(): array
     {
-        $widgets = [['keyValue' => [
-            'content' => $this->text,
-        ]]];
+        $widgets = [
+            [
+                'keyValue' => [
+                    'content' => $this->text,
+                ]
+            ]
+        ];
         foreach (get_object_vars($this) as $var) {
             if (is_array($var)) {
                 foreach ($var as $value) {
@@ -79,7 +83,7 @@ class Webhook extends AbstractWebhook implements Webhookable
         }
 
         return [
-            'header' => [
+            'header'   => [
                 'title'    => $this->title,
                 'subtitle' => $this->date
             ],

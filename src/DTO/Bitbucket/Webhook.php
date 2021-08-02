@@ -51,25 +51,21 @@ class Webhook extends AbstractWebhook implements Webhookable
                 $widgets[] = [
                     'keyValue' => $section
                 ];
-            }
-            elseif (is_array($var)) {
+            } elseif (is_array($var)) {
                 $section = [
                     'topLabel' => '',
-                    'content' => ''
+                    'content'  => ''
                 ];
-                $i=0;
-                foreach($var AS $item) {
-                    $i++;
+                $content = [];
+                foreach ($var as $item) {
                     $class = new ReflectionClass($item);
                     $section['topLabel'] = $class->getShortName();
-
                     if ($class->implementsInterface(Linkable::class)) {
                         /** @var Linkable $item */
-
-                        $section['content'].= $i>1?", ":"";
-                        $section['content'].= "<a href='".$item->getLink()."'>".(string)$item."</a>";
+                        $content[] = "<a href='" . $item->getLink() . "'>" . (string)$item . "</a>";
                     }
                 }
+                $section['content'] = implode(', ', $content);
                 $widgets[] = [
                     'keyValue' => $section
                 ];
@@ -85,6 +81,5 @@ class Webhook extends AbstractWebhook implements Webhookable
                 'widgets' => $widgets
             ]
         ];
-
     }
 }
